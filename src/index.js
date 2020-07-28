@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+
 import * as serviceWorker from './serviceWorker';
+import CovidData from './Components/CovidTable'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter , Route } from 'react-router-dom';
+
+import Accordion from './Components/Accordion';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+
+  <BrowserRouter>
+  <Route exact path="/table" component={CovidData}></Route>
+  <Route exact path="/acc" component={Accordion}></Route>
+</BrowserRouter>
+,
   document.getElementById('root')
 );
 

@@ -1,9 +1,7 @@
 package com.Pranav.Backend.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 
@@ -14,7 +12,6 @@ public class StateData {
 		
 	}
 
-	//.................saakshi
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -23,6 +20,15 @@ public class StateData {
 	private long active;
 	private long recovered;
 	private long deaths;
+	private LocalDate localDate;
+
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
+
+	public void setLocalDate(LocalDate localDate) {
+		this.localDate = localDate;
+	}
 
 	public long getId() {
 		return id;

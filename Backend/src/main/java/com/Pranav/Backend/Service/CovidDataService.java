@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CovidDataService {
@@ -20,7 +22,9 @@ public class CovidDataService {
     private StateDataRepository stateDataRepository;
 
 
-    public void saveData() throws IOException
+
+
+    public List<StateData> saveData() throws IOException
     {
         final String url="https://www.mygov.in/covid-19";
         Document document= Jsoup.connect(url).get();
@@ -92,18 +96,22 @@ public class CovidDataService {
 
             //  st1.setRecovered(Long.parseLong(row.select("td:nth-child(4)").text().replaceAll(",","")));
             //  st1.setDeaths(Long.parseLong(row.select("td:nth-child(4)").text().replaceAll(",","")));
-            stList.add(stateData);
 
+            stateData.setLocalDate(LocalDate.now());
+            stList.add(stateData);
             stateDataRepository.save(stateData);
         }
 
-        for(StateData st:stList)
-        {
-            System.out.println(st);
-        }
+     return stList;
 
 
+    }
 
+
+    public List<Map<String,Object>> getData()
+    {
+        LocalDate localDate=LocalDate.now();
+        return stateDataRepository.getData(localDate);
     }
     }
 
