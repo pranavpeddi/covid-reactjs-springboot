@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container,Table} from 'react-bootstrap'
+import {Table} from 'react-bootstrap'
 import axios from 'axios';
 
 class CovidTable extends React.Component
@@ -18,17 +18,19 @@ componentDidMount() {
       .then(res => {
         this.setState({ covidData: res.data });
         console.log(res.data)
-        console.log(this.state.movies);
+        console.log(this.state.covidData);
       });
+    
   }
   
 
 render()
 {
+    console.log(this.state.covidData)
     return(
-<Container>
+        
 
-    <Table variant="light" striped bordered hover  size="sm">
+    <Table style={{paddingRight:1500,paddingTop:1000    }} variant="light" striped bordered hover  size="sm">
     <thead>
         <tr>
             <th>Name Of The State</th>
@@ -54,7 +56,7 @@ render()
         )}
     </tbody>
     </Table>
-</Container>
+
     );
 }
 

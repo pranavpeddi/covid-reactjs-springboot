@@ -6,12 +6,14 @@ import com.Pranav.Backend.Repository.StateDataRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,5 +115,67 @@ public class CovidDataService {
         LocalDate localDate=LocalDate.now();
         return stateDataRepository.getData(localDate);
     }
+
+
+    public Map<String,Object> getTotalDetails()
+    {
+          List<StateData> stateDataList=stateDataRepository.getAllByLocalDate(LocalDate.now());
+
+          Map<String,Object> dataMap=new HashMap<>();
+          long totalConfirmed=0l;
+          long totalDeaths=0l;
+          long totalRecovered=0l;
+          for(StateData std:stateDataList)
+          {
+              totalConfirmed+=std.getConfirmed();
+              totalDeaths+=std.getDeaths();
+              totalRecovered+=std.getRecovered();
+          }
+          double totalRecoveryPercentage=((totalRecovered*100/totalConfirmed));
+          double
+                  totalDeathPercentage=((totalDeaths*100/totalConfirmed));
+
+
+
+          dataMap.put("totalConfirmed",totalConfirmed);
+          dataMap.put("totalDeaths",totalDeaths);
+          dataMap.put("totalRecovered",totalRecovered);
+
+         dataMap.put("recoveryPercentage",totalRecoveryPercentage);
+          dataMap.put("deathPercentage",totalDeathPercentage);
+
+          return dataMap;
     }
+
+    public Map<String,String> getTestingCount() throws IOException
+    {
+        final String url="https://www.mygov.in/covid-19";
+        Document doc= Jsoup.connect(url).get();
+        Elements links=doc.getElementsByClass("testing_result");
+        Map<String,String> testingMap=new HashMap<>();
+
+        for(Element ele: links)
+        {
+
+            testingMap.put("SamplesTestedTillToday",ele.getElementsByClass("testing_count").text());
+        }
+
+
+        Elements links2=doc.getElementsByClass("testing_sample");
+
+        for(Element ele: links2)
+        {
+            testingMap.put("SamplesTestedToday",ele.getElementsByClass("testing_count").text());
+        }
+        return testingMap;
+    }
+
+
+
+
+    }
+
+
+
+
 

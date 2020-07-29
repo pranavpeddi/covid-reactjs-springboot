@@ -8,12 +8,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter , Route } from 'react-router-dom';
 
 import Accordion from './Components/Accordion';
+import Main from './Components/Main'
+import Char from './Components/Chart'
 
 ReactDOM.render(
 
   <BrowserRouter>
   <Route exact path="/table" component={CovidData}></Route>
   <Route exact path="/acc" component={Accordion}></Route>
+  <Route exact path="/main" component={Main}></Route>
+  <Route exact path="/chart" component={Char}></Route>
 </BrowserRouter>
 ,
   document.getElementById('root')

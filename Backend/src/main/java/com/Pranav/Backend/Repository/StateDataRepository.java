@@ -14,7 +14,9 @@ import java.util.Map;
 public interface StateDataRepository extends JpaRepository<StateData,Long> {
 
  LocalDate localdate=LocalDate.now();
-    @Query(value = "select active,confirmed,recovered,deaths,name from state_data where local_date=?1",nativeQuery=true)
+    @Query(value = "select active,confirmed,recovered,deaths,name from state_data where local_date=?1 ",nativeQuery=true)
     List<Map<String,Object>> getData(LocalDate localdate);
+
+    List<StateData> getAllByLocalDate(LocalDate localdate);
 
 }

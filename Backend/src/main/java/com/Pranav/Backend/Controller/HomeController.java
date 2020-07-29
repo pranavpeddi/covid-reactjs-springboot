@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,4 +32,28 @@ public class HomeController {
     {
         return covidDataService.getData();
     }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getTotal")
+    public  Map<String,Object> getData()
+    {
+        return covidDataService.getTotalDetails();
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getTotalTesting")
+    public  Map<String,String> geTotalTestData()
+    {
+        try {
+            return covidDataService.getTestingCount();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
